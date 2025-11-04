@@ -45,7 +45,14 @@ genfstab -U /mnt >> /mnt/etc/fstab
 # /mnt 要扫描的目录
 # >> /mnt/etc/fstab 追加到目标文件fstab的末尾
 
-
+#安装引导
+sudo pacman -S refind
+mkdir -p /123
+mount /dev/nvme0n1p1 /123
+refind-install --usedefault --alldrivers
+# 经过多次的验证，这个办法最为可行
+#usedefault 代表不进入交互模式
+#alldrivers包括了更多的驱动，原来可能只有ext4
 
 
 
@@ -142,11 +149,3 @@ sudo systemctl enable NetworkManager
 sudo pacman -S iwd
 sudo systemctl enable iwd
 ###最后是将iwd设置为我的WIFI后端,但是在我准备删除wpa_supplicant时提示这个包被networkmanager需要
-
-#安装引导
-sudo pacman -S refind
-mkdir -p /boot/efi
-mount /dev/nvme0n1p1 /boot/efi
-refind-install --usedefault /boot/efi --alldrivers
-#usedefault 代表不进入交互模式
-#alldrivers包括了更多的驱动，原来可能只有ext4
