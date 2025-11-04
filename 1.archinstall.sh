@@ -4,6 +4,7 @@ set -xeu
 
 loadkey us #确保键盘为us布局
 
+# lsblk 查看当前的所有分区以及标签和大小
 # -fdisk -l 检查所有分区
 # -cfdisk /dev/nvme0n1p4 操作该分区
 # -mkfs.ext4 /dev/nvme0n1p4 格式化该分区为ext4
@@ -13,13 +14,9 @@ mount /dev/nvme0n1p4 /mnt
 ##装系统主要就是装root也就是/根分区
 
 #使用WIFI
-# iwctl
-# station wlan0 get-networks
-# station wlan0 connected magic6
-iwctl <<EOF1
-station wlan0 connect m6
-exit
-EOF1
+iwctl
+station wlan0 get-networks
+station wlan0 connected magic6
 
 #要确保时间是正确的，否则会发生签名错误
 # Windows 认为硬件时间是当地时间，而 Linux 认为硬件时间是 UTC+0 标准时间
@@ -30,6 +27,7 @@ timedatectl set-local-rtc true  # 让 Linux 认为硬件时间是当地时间
 sed -i '1iServer = https://mirrors.bfsu.edu.cn/archlinux/$repo/os/$arch' /etc/pacman.d/mirrorlist
 #也可以直接到文件里面设置
 
+# 将基准包安装到/mnt目标目录中，然后生成新的系统
 pacstrap /mnt base base-devel \
         cmake arch-install-scripts vim curl wget \
         rsync net-tools iwd inetutils bind btrfs-progs
@@ -46,6 +44,11 @@ genfstab -U /mnt >> /mnt/etc/fstab
 # -U 使用分区的UUID　 
 # /mnt 要扫描的目录
 # >> /mnt/etc/fstab 追加到目标文件fstab的末尾
+
+
+
+
+
 
 #切换到目标　root
 arch-chroot /mnt /bin/bash
