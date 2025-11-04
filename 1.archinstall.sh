@@ -40,7 +40,7 @@ mount -t btrfs /dev/nvme0n1p5 /mnt/home
 # -t btrfs  手指定为btrfs格式，更加安全
 
 #生成fstab条目
-genfstab -U /mnt >> /mnt/etc/fstab
+genfstab -U /mnt >> /mnt/etc/fstab      #这个方法可能会导致一个结果是把把另一个分区也变成了/切记要检查一下
 # -U 使用分区的UUID　 
 # /mnt 要扫描的目录
 # >> /mnt/etc/fstab 追加到目标文件fstab的末尾
@@ -49,7 +49,7 @@ genfstab -U /mnt >> /mnt/etc/fstab
 sudo pacman -S refind
 mkdir -p /123
 mount /dev/nvme0n1p1 /123
-refind-install --usedefault --alldrivers
+refind-install --alldrivers
 # 经过多次的验证，这个办法最为可行
 #usedefault 代表不进入交互模式
 #alldrivers包括了更多的驱动，原来可能只有ext4
