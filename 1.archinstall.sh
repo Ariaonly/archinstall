@@ -4,7 +4,7 @@ set -xeu
 
 loadkey us #确保键盘为us布局
 
-# lsblk 查看当前的所有分区以及标签和大小
+# -lsblk 查看当前的所有分区以及标签和大小
 # -fdisk -l 检查所有分区
 # -cfdisk /dev/nvme0n1p4 操作该分区
 # -mkfs.ext4 /dev/nvme0n1p4 格式化该分区为ext4
