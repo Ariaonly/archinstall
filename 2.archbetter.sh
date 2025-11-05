@@ -1,3 +1,4 @@
+
 #安装输入法
 sudo pacman -S fcitx5 fcitx5-configtool fcitx5-rime 
 ###sudo pacman -S fcitx5-xim fcitx5-im
