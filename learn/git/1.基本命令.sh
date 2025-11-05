@@ -20,3 +20,6 @@ git pull                    # 获取并合并
 git pull --rebase           # 获取并线性整合，历史更直
 
 git push                    # 推送
+
+git status                  # 查看当前的状态，比如修改哪些文件，创建哪些文件
+git log                     # 查看历史提交的记录

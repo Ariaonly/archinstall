@@ -5,7 +5,7 @@ sudo vim /etc/NetworkManager/conf.d/wifi_backend.conf
     [device]
     wifi.backend=iwd
 
-# 2.提示DNS解析有问题，但是我的浏览器可以正常上网，但是我的命令行或者说终端都无啊上网
+# 2.提示DNS解析有问题，但是我的浏览器可以正常上网，但是我的命令行或者说终端都无法连接
 
 1.检查resolv.conf
 ls -l /etc/resolv.conf
