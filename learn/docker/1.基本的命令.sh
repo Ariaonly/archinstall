@@ -18,7 +18,7 @@ docker pull ubuntu  #加上:版本，也可以不加,自动选择最新版本
 
 docekr images                       # 查看当前有哪些docker镜像
 
-docekr run -it --name=c1 ubuntu:latest /bin/bash            
+docker run -it --name=c1 ubuntu:24.04 /bin/bash            
 # -i 表示保持运行
 # -t 表示分配一个终端来运行并立即进入
 # -it表示创建时自动进入，退出后容器自动关闭，被称为交互式容器   
