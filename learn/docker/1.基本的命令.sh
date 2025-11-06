@@ -1,4 +1,20 @@
 
+#由于防火墙的问题，配置代理是一个不错的选择
+vim /etc/docker/daemon.json 
+
+{
+  "registry-mirrors": [
+    "https://docker.mirrors.ustc.edu.cn",  
+    "https://registry.docker-cn.com",
+    "http://hub-mirror.c.163.com",  
+    "https://docker.m.daocloud.io",
+    "https://docker.xuanyuan.me",
+    "https://mirror.ccs.tencentyun.com"
+  ],
+  "dns": ["8.8.8.8", "114.114.114.114"]
+}
+
+docker pull ubuntu  #加上:版本，也可以不加,自动选择最新版本
 
 docekr images                       # 查看当前有哪些docker镜像
 
@@ -23,3 +39,20 @@ docker rm c2                        # 删除容器
 docker rm 'docker ps -aq'           # 删除所有容器
 
 docker inspect c2                   # 容器信息
+
+
+
+
+#拉取其他架构的镜像---我是为了在树莓派上使用
+docker pull --platform=linux/arm64 ubuntu:24.04
+
+# 打包成 tar
+docker save -o ubuntu24_arm64.tar ubuntu:24.04
+
+scp ubuntu24_arm64.tar pi@<Pi的IP>:/home/pi/
+
+# 加载镜像
+docker load -i ubuntu24_arm64.tar
+
+docker image inspect ubuntu:24.04 --format '{{.Os}}/{{.Architecture}}'
+# 期待输出：linux/arm64
