@@ -23,7 +23,6 @@ deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu ${CODENAME}-updates main restric
 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu ${CODENAME}-backports main restricted universe multiverse
 deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu ${CODENAME}-security main restricted universe multiverse
 EOF
-
 apt update
 
 # 
