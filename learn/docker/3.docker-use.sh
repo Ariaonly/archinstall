@@ -63,4 +63,10 @@ docker run -it --name=c1 ubuntu:24.04 /bin/bash
 # -回车后会直接进入容器内部
 
 apt-get update
+
+# ==========================================================================
+
+#我查看设备有没有挂载进来的工具
 apt-get install -y v4l-utils
+v4l2-ctl --list-devices
+
