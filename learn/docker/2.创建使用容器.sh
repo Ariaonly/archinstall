@@ -50,6 +50,13 @@ docker run --rm -it \
 # --mount type=bind,...把宿主机目录 ~/faceproj/data 挂到容器的 /data，外挂数据卷
 # --network host 用宿主机网络
 
+docker run --rm -it --name face \
+  --device=/dev/video0 \
+  --mount type=bind,source="$HOME/pro/face",target=/data \
+  --network host \
+  ubuntu:24.04 \
+  bash
+
 docker run -it --name=c1 ubuntu:24.04 /bin/bash            
 # -i 表示保持运行
 # -t 表示分配一个终端来运行并立即进入
