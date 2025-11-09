@@ -34,11 +34,8 @@ docker load -i ubuntu24_arm64.tar
 docker image inspect ubuntu:24.04 --format '{{.Os}}/{{.Architecture}}' # 期待输出：linux/arm64
 
 
-# ============================================================================
+# ===========================docker run=======================================
 
-docker run
-
-# 当前环境为arch
 docker run --rm -it \
   --name face \
   --device=/dev/video0 \
