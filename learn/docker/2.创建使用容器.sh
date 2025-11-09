@@ -33,6 +33,9 @@ docker load -i ubuntu24_arm64.tar
 
 docker image inspect ubuntu:24.04 --format '{{.Os}}/{{.Architecture}}' # 期待输出：linux/arm64
 
+# 打包成镜像
+docker commit face face_recog:pi5
+
 
 # ===========================docker run=======================================
 
@@ -55,7 +58,7 @@ docker run --rm -it --name face \
   --mount type=bind,source="$HOME/pro/face",target=/data \
   --network host \
   ubuntu:24.04 \
-  bash
+  /bin/bash
 
 docker run -it --name=c1 ubuntu:24.04 /bin/bash            
 # -i 表示保持运行
@@ -66,7 +69,14 @@ docker run -it --name=c1 ubuntu:24.04 /bin/bash
 # --name= 表示起名字
 # -回车后会直接进入容器内部
 
-apt-get update
+docker run --rm -it \
+  --name=face1 \
+  --device=/dev/video0 \
+  --mount type=bind,source="$HOME/pro/face",target=/data \
+  --network host \
+  face_recog:pi5 \
+  /bin/bash
+
 
 # ==========================================================================
 
@@ -74,3 +84,7 @@ apt-get update
 apt-get install -y v4l-utils
 v4l2-ctl --list-devices
 
+# ===========================================================================
+
+docker commit face face_recog:pi5
+docker tag face_recog:pi5 face_recog:pi5-v1
