@@ -26,11 +26,13 @@ docker pull --platform=linux/arm64 ubuntu:24.04
 # 打包成 tar
 docker save -o ubuntu24_arm64.tar ubuntu:24.04
 
+# 传输到树莓派上
 scp ubuntu24_arm64.tar pi@<Pi的IP>:/home/pi/
 
 # 加载镜像
 docker load -i ubuntu24_arm64.tar
 
+# 查看镜像的架构
 docker image inspect ubuntu:24.04 --format '{{.Os}}/{{.Architecture}}' # 期待输出：linux/arm64
 
 # 打包成镜像

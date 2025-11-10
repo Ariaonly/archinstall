@@ -1,5 +1,4 @@
 
-
 lsb_release -a
 uname -m
 
