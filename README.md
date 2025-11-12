@@ -3,7 +3,7 @@
 
 本项目记录了我在安装与使用 Arch Linux 过程中遇到的问题与解决方案
 
-除此以外，我将在这个项目记录我的学习笔记，包括git，docker，podman，go，java，python
+除此以外，我将在这个项目记录我的学习笔记，包括git，docker，podman
 
 💿 arch系统安装步骤
 
