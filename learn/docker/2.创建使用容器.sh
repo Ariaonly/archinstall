@@ -1,22 +1,26 @@
 
 docker pull ubuntu  #加上:版本，也可以不加,自动选择最新版本
 
-docekr images                       # 查看当前有哪些docker镜像
+docekr images                                 # 查看当前有哪些docker镜像
 
 docker run # 这个查看dockerrun的教程
 
-docker ps                           # 查看容器
--a                                  # 查看所有容器
--aq                                 # 查看所有容器的id
+docker ps                                     # 查看容器
+-a                                            # 查看所有容器
+-aq                                           # 查看所有容器的id
 
-docker exec -it c2 /bin/bash        # 进入c2这个容器
+docker exec -it c2 /bin/bash                  # 进入c2这个容器
 
-docker stop c2                      # 关闭守护式容器c2
+docker stop c2                                # 关闭守护式容器c2
 
-docker rm c2                        # 删除容器
-docker rm 'docker ps -aq'           # 删除所有容器
+docker rm c2                                  # 删除容器
+docker rm 'docker ps -aq'                     # 删除所有容器
 
-docker inspect c2                   # 容器信息
+docker inspect c2                             # 容器信息
+
+docker tag ubuntu:24.04 ubuntu-arm64:24.04    # 将这个镜像换一个tag，防止拉取同名不同架构的镜像出现none报错
+
+docker rmi ubuntu:24.04                       # 删除这个旧标签
 
 # ===========================================================================
 
@@ -39,7 +43,7 @@ docker image inspect ubuntu:24.04 --format '{{.Os}}/{{.Architecture}}' # 期待�
 docker commit face face_recog:pi5
 
 
-# ===========================docker run=======================================
+# ===========================docker run 原架构=================================
 
 docker run --rm -it \
   --name face \
@@ -80,7 +84,7 @@ docker run --rm -it \
   /bin/bash
 
 
-# ==========================================================================
+# ===========================================================================
 
 #我查看设备有没有挂载进来的工具
 apt-get install -y v4l-utils
@@ -90,3 +94,12 @@ v4l2-ctl --list-devices
 
 docker commit face face_recog:pi5
 docker tag face_recog:pi5 face_recog:pi5-v1
+
+# =====================跨架构编译或者运行=======================================
+sudo pacman -S qemu-user-static-binfmt
+sudo systemctl enable --now systemd-binfmt.service
+
+docker run --rm -it \
+  --platform linux/arm64 \
+  ubuntu-arm64:24.04 \
+  /bin/bash
