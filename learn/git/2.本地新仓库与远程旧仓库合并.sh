@@ -12,3 +12,5 @@ git fetch origin
 # 3. 将本地 main 分支指向远程的 main（关键一步）
 git reset --hard origin/main
 
+# 4. 告诉git推到哪
+git push --set-upstream origin main
