@@ -25,4 +25,21 @@ deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu ${CODENAME}-security main restri
 EOF
 apt update
 
-# 
+# 配置docker内的网络环境--arm64
+CODENAME=$(awk -F= '/VERSION_CODENAME/{print $2}' /etc/os-release)
+
+cat >/etc/apt/sources.list <<EOF
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports ${CODENAME} main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports ${CODENAME}-updates main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports ${CODENAME}-backports main restricted universe multiverse
+deb https://mirrors.tuna.tsinghua.edu.cn/ubuntu-ports ${CODENAME}-security main restricted universe multiverse
+EOF
+
+# 安装ca-certificates，系统有了根证书，update-ca-certificates 把源导入 /etc/ssl/certs
+apt-get install -y ca-certificates
+update-ca-certificates
+
+# 禁用官方源
+mv /etc/apt/sources.list.d/ubuntu.sources /etc/apt/sources.list.d/ubuntu.sources.disabled
+
+apt-get update

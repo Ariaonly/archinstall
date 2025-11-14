@@ -101,5 +101,7 @@ sudo systemctl enable --now systemd-binfmt.service
 
 docker run --rm -it \
   --platform linux/arm64 \
+  --network host \
   ubuntu-arm64:24.04 \
   /bin/bash
+# 所有 --xxx 选项都放在镜像名 ubuntu-arm64:24.04 之前
