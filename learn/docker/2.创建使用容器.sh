@@ -1,4 +1,6 @@
 
+
+
 docker pull ubuntu  #加上:版本，也可以不加,自动选择最新版本
 
 docekr images                                 # 查看当前有哪些docker镜像
@@ -27,6 +29,10 @@ docker rmi ubuntu:24.04                       # 删除这个旧标签
 #拉取其他架构的镜像---我是为了在树莓派上使用
 docker pull --platform=linux/arm64 ubuntu:24.04
 
+# qemu跨架构运行
+sudo pacman -S qemu-user-static-binfmt
+sudo systemctl enable --now systemd-binfmt.service
+
 # 打包成 tar
 docker save -o ubuntu24_arm64.tar ubuntu:24.04
 
@@ -42,66 +48,41 @@ docker image inspect ubuntu:24.04 --format '{{.Os}}/{{.Architecture}}' # 期待�
 # 打包成镜像
 docker commit face face_recog:pi5
 
+# 更换tag标签
+docker tag face_recog:pi5 face_recog:pi5-v1
 
-# ===========================docker run 原架构=================================
+
+# =========================== docker run =================================
 
 docker run --rm -it \
-  --name face \
+  --name=face1 \
+  --platform linux/arm64 \
   --device=/dev/video0 \
   --mount type=bind,source="$HOME/project/face",target=/data \
-  --network host \
-  ubuntu:latest \
-  /bin/bash
-
-# --rm是退出当前容器后容器自动销毁
-# --name是命名该docker
-# --device=/dev/video0 把宿主机的摄像头映射进容器
-# --mount type=bind,...把宿主机目录 ~/faceproj/data 挂到容器的 /data，外挂数据卷
-# --network host 用宿主机网络
-
-docker run --rm -it --name face \
-  --device=/dev/video0 \
-  --mount type=bind,source="$HOME/pro/face",target=/data \
   --network host \
   ubuntu:24.04 \
   /bin/bash
 
-docker run -it --name=c1 ubuntu:24.04 /bin/bash            
 # -i 表示保持运行
 # -t 表示分配一个终端来运行并立即进入
 # -it表示创建时自动进入，退出后容器自动关闭，被称为交互式容器   
 # -d 表示创建一个容器不会立即进入
 # -id表示创建容器，在后台运行，需要docker exec进入容器，退出后不会立即关闭，被称为守护式容器
-# --name= 表示起名字
-# -回车后会直接进入容器内部
 
-docker run --rm -it \
-  --name=face1 \
-  --device=/dev/video0 \
-  --mount type=bind,source="$HOME/pro/face",target=/data \
-  --network host \
-  face_recog:pi5 \
-  /bin/bash
+# --rm是退出当前容器后容器自动销毁
+# --name是命名该docker
+# --device=/dev/video0 把宿主机的摄像头映射进容器
+# --mount type=bind,...外挂数据卷
+# --network host 用宿主机网络
+# --platform linux/arm64 跨架构编译或者运行
+        
+# 所有 --xxx 选项都放在镜像名 ubuntu-arm64:24.04 之前
 
-
-# ===========================================================================
-
-#我查看设备有没有挂载进来的工具
+#查看设备有没有挂载进来的工具
 apt-get install -y v4l-utils
 v4l2-ctl --list-devices
 
-# ===========================================================================
-
-docker commit face face_recog:pi5
-docker tag face_recog:pi5 face_recog:pi5-v1
 
 # =====================跨架构编译或者运行=======================================
 sudo pacman -S qemu-user-static-binfmt
 sudo systemctl enable --now systemd-binfmt.service
-
-docker run --rm -it \
-  --platform linux/arm64 \
-  --network host \
-  ubuntu-arm64:24.04 \
-  /bin/bash
-# 所有 --xxx 选项都放在镜像名 ubuntu-arm64:24.04 之前
