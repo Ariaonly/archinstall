@@ -1,5 +1,5 @@
 
-# 1.提示发现了网络并且可以输入密码，但是无法连接，包括直接插网线
+# 1.提示发现了网络并且可以输入密码，但是开始连接后就一直在转圈，然后无法连接，包括直接插网线，
 
 sudo vim /etc/NetworkManager/conf.d/wifi_backend.conf
     [device]

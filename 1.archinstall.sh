@@ -146,7 +146,10 @@ sudo pacman -S plasma-nm
 sudo pacman -S networkmanager
 sudo systemctl enable NetworkManager
 
-###在我第一次安装KDE后我用手机加数据线供网安装的NetworkManager，虽然此时显示了网络且有输入密码这样的操作，但是当开始连接后就一直在转圈，然后无法连接，
+###在我第一次安装KDE后我用手机加数据线供网安装的NetworkManager，虽然此时，
 sudo pacman -S iwd
 sudo systemctl enable iwd
-###最后是将iwd设置为我的WIFI后端,但是在我准备删除wpa_supplicant时提示这个包被networkmanager需要
+sudo vim /etc/NetworkManager/conf.d/wifi_backend.conf
+#     [device]
+#     wifi.backend=iwd
+# 将iwd设置为WIFI后端

@@ -1,11 +1,9 @@
 
 
 
-docker pull ubuntu  #加上:版本，也可以不加,自动选择最新版本
+docker pull ubuntu                            #加上:版本，也可以不加,自动选择最新版本
 
 docekr images                                 # 查看当前有哪些docker镜像
-
-docker run # 这个查看dockerrun的教程
 
 docker ps                                     # 查看容器
 -a                                            # 查看所有容器
@@ -37,7 +35,7 @@ sudo systemctl enable --now systemd-binfmt.service
 docker save -o ubuntu24_arm64.tar ubuntu:24.04
 
 # 传输到树莓派上
-scp ubuntu24_arm64.tar pi@<Pi的IP>:/home/pi/
+scp ubuntu24_arm64.tar pi:/home/pi/     # 若没加config就写pi@<Pi的IP>
 
 # 加载镜像
 docker load -i ubuntu24_arm64.tar
@@ -81,8 +79,3 @@ docker run --rm -it \
 #查看设备有没有挂载进来的工具
 apt-get install -y v4l-utils
 v4l2-ctl --list-devices
-
-
-# =====================跨架构编译或者运行=======================================
-sudo pacman -S qemu-user-static-binfmt
-sudo systemctl enable --now systemd-binfmt.service
