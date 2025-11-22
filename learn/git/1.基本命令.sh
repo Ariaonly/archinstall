@@ -5,7 +5,7 @@
 git config --global user.name "你的名字"
 git config --global user.email "you@example.com"
 
-# 修改用户名或者邮箱
+# 修改邮箱
 git config user.email "you@example.com"
 
 # 测试
