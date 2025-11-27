@@ -1,5 +1,5 @@
 
-# 安装python相关的东西
+# 安装python虚拟环境相关的东西
 sudo apt install python3 python3-venv python3-pip
 
 python -m venv .venv
@@ -7,6 +7,17 @@ python -m venv .venv
 source .venv/bin/activate
 
 deactivate
+
+# 自动进入虚拟环境
+
+sudo pacman -S direnv
+
+echo 'eval "$(direnv hook bash)"' >> ~/.bashrc
+source ~/.bashrc
+
+echo 'source .venv/bin/activate' > .envrc # 项目文件夹下运行这个
+
+direnv allow
 
 # 控制python的版本
 sudo pacman -S pyenv
