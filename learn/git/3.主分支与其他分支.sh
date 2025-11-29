@@ -16,3 +16,5 @@ git merge --no-ff better/path
 
 git merge -X theirs better/path
 # 所有文件以分支为主
+
+git merge --no-ff -X theirs better/path

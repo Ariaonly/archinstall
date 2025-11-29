@@ -13,7 +13,7 @@ docker run --rm -it \
   --name=face1 \
   --platform linux/arm64 \
   --device=/dev/video0 \
-  --mount type=bind,source="$HOME/project/face",target=/data \
+  --mount type=bind,source="$HOME/project",target=/data \
   --network host \
   ubuntu:24.04 \
   /bin/bash
